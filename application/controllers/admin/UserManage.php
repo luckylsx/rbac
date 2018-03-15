@@ -53,6 +53,12 @@ class UserManage extends CI_Controller {
     {
         if (IS_POST){
             $data = $this->input->post();
+            //验证相关参数
+            $checkStatus = $this->userModel->checkUserInfo($data);
+            //验证失败
+            if (!$checkStatus){
+                self::$helper->ajaxReturn(1,'admin user add failed',[]);
+            }
             $status = $this->userModel->addUser($data);
             //添加失败
             if (!$status){

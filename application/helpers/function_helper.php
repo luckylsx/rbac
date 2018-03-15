@@ -213,7 +213,7 @@ class function_helper {
 
     /**
      * ajax请求返回
-     * @param int $status 1 请求成功   0 请求失败
+     * @param int $status 0 请求成功   1 请求失败
      * @param string $message 请求失败时的错误信息
      */
     public function ajaxReturn($status=0,$message='ok',$data=[])
@@ -224,7 +224,8 @@ class function_helper {
             echo $this->json_response([
                 'status' => $status,
                 'message' => $message,
-                "data"=>json_decode(json_encode($message,JSON_UNESCAPED_UNICODE))]);
+                "data"=>json_decode(json_encode($data,JSON_UNESCAPED_UNICODE))
+            ]);
         }
         exit;
     }

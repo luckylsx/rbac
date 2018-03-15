@@ -81,6 +81,7 @@ class UserModel extends CI_Model {
         if (!isset($data['password']) || empty($data['password'])){
             return false;
         }
+        return true;
     }
 
     /**
