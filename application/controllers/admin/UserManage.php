@@ -14,15 +14,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class UserManage extends CI_Controller {
     private static $helper;
+    //每页条数
+    private $page_limit;
+    //配置信息
+    private $conf;
     public function __construct(){
         parent::__construct();
-        $this->load->model("admin/UserModel");
+        $this->load->model(["admin/UserModel",'ComConfModel']);
         $this->userModel = new UserModel();
+        $this->comConfModel = new ComConfModel();
         //单例模式实例化工具辅助函数
         $this->load->helper("function_helper");
         if (!(self::$helper instanceof function_helper)){
             self::$helper = new function_helper();
         }
+        //获取配置信息
+        $this->conf = $this->comConfModel->getConf();
+        $this->page_limit = $this->conf['page_limit'];
     }
 
     /**
@@ -34,10 +42,10 @@ class UserManage extends CI_Controller {
         $username = $this->input->get("name");
         $page = $this->input->get("page");
         $page = $page ? $page:1;
-        $adminList = $this->userModel->getAdminList($username,$page,PAGINATION);
+        $adminList = $this->userModel->getAdminList($username,$page,$this->page_limit);
         $base_url = site_url('admin/UserManage/index');
         $info['adminList'] = $adminList['list'];
-        $info['page_show'] = self::$helper->pagination(['username'=>$username],$base_url,$adminList['total'],PAGINATION);
+        $info['page_show'] = self::$helper->pagination(['username'=>$username],$base_url,$adminList['total'],$this->page_limit);
         $info['name'] = '';
         if ($username){
             $info['name'] = $username;

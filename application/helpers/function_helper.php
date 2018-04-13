@@ -219,12 +219,12 @@ class function_helper {
     public function ajaxReturn($status=0,$message='ok',$data=[])
     {
         if ($status != 0 ){ //返回失败结果
-            echo $this->json_response(['status'=>$status,"message"=>$message]);
+            echo $this->json_response(['errcode'=>$status,"message"=>$message]);
         }else{
             echo $this->json_response([
-                'status' => $status,
+                'errcode' => $status,
                 'message' => $message,
-                "data"=>json_decode(json_encode($data,JSON_UNESCAPED_UNICODE))
+                "data"=>$data
             ]);
         }
         exit;

@@ -3,52 +3,32 @@
 </head>
 <body>
 <article class="page-container">
-	<form action="<?php echo site_url('admin/RoleManage/editAction')?>" method="post" class="form form-horizontal" id="form-admin-role-edit">
-        <?php if(isset($role['id']) && !empty($role['id']))?>
-        <input type="hidden" name="id" value="<?php echo $role['id'];?>">
+	<form action="<?php echo site_url('admin/SystemManage/editAction')?>" method="post" class="form form-horizontal" id="form-admin-role-edit">
+        <?php if(isset($conf['id']) && !empty($conf['id'])):?>
+        <input type="hidden" name="id" value="<?php echo $conf['id'];?>">
+        <?php endif;?>
 
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色名称：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="<?php echo $role['role_name']?>" placeholder="" id="roleName" name="roleName">
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3">描述：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="<?php echo $role['description']?>" placeholder="" id="" name="description">
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3">菜单权限：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-                <?php foreach ($menuList as $menu): ?>
-				<dl class="permission-list">
-					<dt>
-						<label>
-							<input type="checkbox" value="<?php echo $menu['id'];?>" <?php if (in_array($menu['id'],$role['menu_list'])) echo "checked"?> name="menu_node[]" id="user-Character-0">
-							<?php echo $menu['title'];?></label>
-					</dt>
-                    <?php if ($menu['subMenu']): ?>
-					<dd>
-                        <?php foreach ($menu['subMenu'] as $subMenu):?>
-						<dl class="cl permission-list2">
-							<dt>
-								<label class="">
-									<input type="checkbox" value="<?php echo $subMenu['id'];?>" <?php if (in_array($subMenu['id'],$role['menu_list'])) echo "checked"?> name="menu_node[]" id="user-Character-0-0">
-									<?php echo $subMenu['title'];?></label>
-							</dt>
-						</dl>
-                        <?php endforeach;?>
-					</dd>
-                    <?php endif;?>
-				</dl>
-                <?php endforeach;?>
-			</div>
-		</div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>字段名称：</label>
+            <div class="formControls col-xs-4 col-sm-6">
+                <input type="text" class="input-text" value="<?php echo $conf['column']?>" placeholder="字段名" id="roleName" name="column">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">字段值：</label>
+            <div class="formControls col-xs-4 col-sm-6">
+                <input type="text" class="input-text" value="<?php echo $conf['value']?>" placeholder="字段值" id="" name="value">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">字段描述：</label>
+            <div class="formControls col-xs-4 col-sm-6">
+                <input type="text" class="input-text" value="<?php echo $conf['desc']?>" placeholder="字段描述" id="" name="desc">
+            </div>
+        </div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-				<button type="submit" class="btn btn-success radius" id="admin-role-save" name="admin-role-save"><i class="icon-ok"></i> 确定</button>
+				<button type="submit" class="btn btn-success radius" id="admin-role-save"><i class="icon-ok"></i> 确定</button>
 			</div>
 		</div>
 	</form>
@@ -109,7 +89,7 @@ $(function(){
                             close();
                         },1500);
                     }else{
-                        layer.msg('编辑失败!', {icon: 5,time:2000});
+                        layer.msg('编辑失败!'+res.message, {icon: 5,time:2000});
                     }
                 }
             });

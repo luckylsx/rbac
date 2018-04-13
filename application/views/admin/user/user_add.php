@@ -67,8 +67,8 @@ $(function () {
                 success: function (res) {
                     res = JSON.parse(res);
                     //console.log(res);
-                    if(res.status==0){
-                        layer.msg('添加成功!', {icon: 1,time:1500});
+                    if(res.errcode==0){
+                        layer.msg('添加成功!', {icon: 1,time:1000});
                         setTimeout(function () {
                             close();
                         },1500);

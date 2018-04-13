@@ -3,49 +3,51 @@
 </head>
 <body>
 <article class="page-container">
-	<form action="<?php echo site_url('admin/RoleManage/roleAdd')?>" method="post" class="form form-horizontal" id="form-admin-role-add">
+	<form action="<?php echo site_url('admin/menuManage/menuAddAction')?>" method="post" class="form form-horizontal" id="form-admin-role-add">
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色名称：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="roleName" name="roleName">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>选择父级菜单：</label>
+			<div class="formControls col-xs-4 col-sm-6">
+                <select name="p_id" id="p_id" style="width:200px" class="input-text valid">
+                    <option value="0">顶级菜单</option>
+                    <?php foreach ($p_menu as $p_m):?>
+                    <option value="<?php echo $p_m['id'];?>"><?php echo $p_m['title'];?></option>
+                    <?php endforeach;?>
+                </select>
 			</div>
 		</div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">菜单名：</label>
+            <div class="formControls col-xs-4 col-sm-6">
+                <input type="text" class="input-text" value="" placeholder="菜单名" id="" name="title">
+            </div>
+        </div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3">描述：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="" name="description">
+			<label class="form-label col-xs-4 col-sm-3">菜单id值：</label>
+			<div class="formControls col-xs-4 col-sm-6">
+				<input type="text" class="input-text" value="" placeholder="菜单id值" id="" name="id_name">
 			</div>
 		</div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">图标：</label>
+            <div class="formControls col-xs-4 col-sm-6">
+                <input type="text" class="input-text" value="" placeholder="图标" id="" name="menu_icon">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">菜单url：</label>
+            <div class="formControls col-xs-4 col-sm-6">
+                <input type="text" class="input-text" value="" placeholder="菜单url 如：admin/admin/index" id="" name="menu_url">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">排序：</label>
+            <div class="formControls col-xs-4 col-sm-6">
+                <input type="number" class="input-text" value="" placeholder="排序" id="" name="sort">
+            </div>
+        </div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3">菜单权限：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-                <?php foreach ($menuList as $menu): ?>
-				<dl class="permission-list">
-					<dt>
-						<label>
-							<input type="checkbox" value="<?php echo $menu['id'];?>" name="menu_node[]" id="user-Character-0">
-							<?php echo $menu['title'];?></label>
-					</dt>
-                    <?php if ($menu['subMenu']): ?>
-					<dd>
-                        <?php foreach ($menu['subMenu'] as $subMenu):?>
-						<dl class="cl permission-list2">
-							<dt>
-								<label class="">
-									<input type="checkbox" value="<?php echo $subMenu['id'];?>" name="menu_node[]" id="user-Character-0-0">
-									<?php echo $subMenu['title'];?></label>
-							</dt>
-						</dl>
-                        <?php endforeach;?>
-					</dd>
-                    <?php endif;?>
-				</dl>
-                <?php endforeach;?>
-			</div>
-		</div>
-		<div class="row cl">
-			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-				<button type="submit" class="btn btn-success radius" id="admin-role-save" name="admin-role-save"><i class="icon-ok"></i> 确定</button>
+			<div class="col-xs-8 col-sm-9 col-xs-offset-5 col-sm-offset-3">
+				<button type="submit" class="btn btn-success radius" id="admin-role-save"><i class="icon-ok"></i> 确定</button>
 			</div>
 		</div>
 	</form>
@@ -101,12 +103,12 @@ $(function(){
                 success: function (res) {
                     res = JSON.parse(res);
                     if(res.errcode==0){
-                        layer.msg('添加成功!', {icon: 1,time:2000});
+                        layer.msg('添加成功!', {icon: 1,time:1000});
                         setTimeout(function () {
                             close();
                         },"2000");
                     }else{
-                        layer.msg('添加失败!', {icon: 5,time:2000});
+                        layer.msg('添加失败！'+res.message, {icon: 5,time:1500});
                     }
                 }
             });

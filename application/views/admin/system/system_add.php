@@ -3,52 +3,28 @@
 </head>
 <body>
 <article class="page-container">
-	<form action="<?php echo site_url('admin/RoleManage/editAction')?>" method="post" class="form form-horizontal" id="form-admin-role-edit">
-        <?php if(isset($role['id']) && !empty($role['id']))?>
-        <input type="hidden" name="id" value="<?php echo $role['id'];?>">
-
+	<form action="<?php echo site_url('admin/SystemManage/systemAddAction')?>" method="post" class="form form-horizontal" id="form-admin-role-add">
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色名称：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="<?php echo $role['role_name']?>" placeholder="" id="roleName" name="roleName">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>字段名称：</label>
+			<div class="formControls col-xs-4 col-sm-6">
+				<input type="text" class="input-text" value="" placeholder="字段值" id="roleName" name="column">
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3">描述：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="<?php echo $role['description']?>" placeholder="" id="" name="description">
+			<label class="form-label col-xs-4 col-sm-3">字段值：</label>
+			<div class="formControls col-xs-4 col-sm-6">
+				<input type="text" class="input-text" value="" placeholder="字段值" id="" name="value">
 			</div>
 		</div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">字段描述：</label>
+            <div class="formControls col-xs-4 col-sm-6">
+                <input type="text" class="input-text" value="" placeholder="字段描述" id="" name="desc">
+            </div>
+        </div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3">菜单权限：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-                <?php foreach ($menuList as $menu): ?>
-				<dl class="permission-list">
-					<dt>
-						<label>
-							<input type="checkbox" value="<?php echo $menu['id'];?>" <?php if (in_array($menu['id'],$role['menu_list'])) echo "checked"?> name="menu_node[]" id="user-Character-0">
-							<?php echo $menu['title'];?></label>
-					</dt>
-                    <?php if ($menu['subMenu']): ?>
-					<dd>
-                        <?php foreach ($menu['subMenu'] as $subMenu):?>
-						<dl class="cl permission-list2">
-							<dt>
-								<label class="">
-									<input type="checkbox" value="<?php echo $subMenu['id'];?>" <?php if (in_array($subMenu['id'],$role['menu_list'])) echo "checked"?> name="menu_node[]" id="user-Character-0-0">
-									<?php echo $subMenu['title'];?></label>
-							</dt>
-						</dl>
-                        <?php endforeach;?>
-					</dd>
-                    <?php endif;?>
-				</dl>
-                <?php endforeach;?>
-			</div>
-		</div>
-		<div class="row cl">
-			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-				<button type="submit" class="btn btn-success radius" id="admin-role-save" name="admin-role-save"><i class="icon-ok"></i> 确定</button>
+			<div class="col-xs-8 col-sm-9 col-xs-offset-5 col-sm-offset-3">
+				<button type="submit" class="btn btn-success radius" id="admin-role-save"><i class="icon-ok"></i> 确定</button>
 			</div>
 		</div>
 	</form>
@@ -90,7 +66,7 @@ $(function(){
     function refresh() {
         location.replace(location.href)
     }
-	$("#form-admin-role-edit").validate({
+	$("#form-admin-role-add").validate({
 		rules:{
 			roleName:{
 				required:true,
@@ -104,12 +80,12 @@ $(function(){
                 success: function (res) {
                     res = JSON.parse(res);
                     if(res.errcode==0){
-                        layer.msg('编辑成功!', {icon: 1,time:1500});
+                        layer.msg('添加成功!', {icon: 1,time:2000});
                         setTimeout(function () {
                             close();
-                        },1500);
+                        },"2000");
                     }else{
-                        layer.msg('编辑失败!', {icon: 5,time:2000});
+                        layer.msg('添加失败！'+res.message, {icon: 5,time:2000});
                     }
                 }
             });

@@ -76,9 +76,9 @@ function user_del(obj,id) {
             data:{id:id},
             dataType:"JSON",
             success: function(data){
-                if(data.status==0){
+                if(data.errcode==0){
                     $(obj).parents("tr").remove();
-                    layer.msg('删除成功!',{icon:1,time:1500});
+                    layer.msg('删除成功!',{icon:1,time:1000});
                 }else{
                     layer.msg('删除失败!',{icon:5,time:1500});
                 }

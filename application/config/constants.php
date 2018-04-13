@@ -86,6 +86,3 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 //定义是否是post提交
 define("IS_POST",strtolower($_SERVER['REQUEST_METHOD'])=='post');
-
-//定义每页显示数量
-define('PAGINATION',2);

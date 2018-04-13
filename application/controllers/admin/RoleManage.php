@@ -14,16 +14,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class RoleManage extends CI_Controller {
     private  static $helper = null;
+    //每页条数
+    private $page_limit;
+    //配置信息
+    private $conf;
     public function __construct(){
         parent::__construct();
-        $this->load->model(["admin/RoleModel","admin/MenuModel"]);
+        $this->load->model(["admin/RoleModel","admin/MenuModel",'ComConfModel']);
         $this->RoleModel = new RoleModel();
         $this->MenuModel = new MenuModel();
+        $this->comConfModel = new ComConfModel();
         $this->load->helper("function_helper");
         if (!(self::$helper instanceof function_helper)){
             self::$helper = new function_helper();
         }
-
+        if (!(self::$helper instanceof function_helper)){
+            self::$helper = new function_helper();
+        }
+        //获取配置信息
+        $this->conf = $this->comConfModel->getConf();
+        $this->page_limit = $this->conf['page_limit'];
     }
 
     /**
@@ -34,13 +44,13 @@ class RoleManage extends CI_Controller {
         $page = $this->input->get("page");
         $page = $page ? $page:1;
         //获取角色列表
-        $roleList = $this->RoleModel->getRoleList($page,PAGINATION);
+        $roleList = $this->RoleModel->getRoleList($page,$this->page_limit);
         //每页记录
         $info['roleList'] = $roleList['list'];
         //总记录数
         $info['total'] = $roleList['total'];
         $base_url = site_url('admin/RoleManage/index');
-        $info['page_show'] = self::$helper->pagination('',$base_url,$roleList['total'],PAGINATION);
+        $info['page_show'] = self::$helper->pagination('',$base_url,$roleList['total'],$this->page_limit);
         $this->load->view("admin/role/admin_role",$info);
     }
 

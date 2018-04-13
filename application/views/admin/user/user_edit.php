@@ -64,8 +64,8 @@
                 $(form).ajaxSubmit({
                     success: function (res) {
                         res = JSON.parse(res);
-                        if(res.status==0){
-                            layer.msg('编辑成功!', {icon: 1,time:1500});
+                        if(res.errcode==0){
+                            layer.msg('编辑成功!', {icon: 1,time:1000});
                             setTimeout(close,1500);
                         }else{
                             layer.msg('编辑失败!', {icon: 5,time:1500});
@@ -91,7 +91,7 @@
             data:data,
             dataType:"JSON",
             success: function(data){
-                if(data.status==0){
+                if(data.errcode==0){
                     layer.msg('编辑成功!',{icon:1,time:1000});
                     setTimeout(close,1000);
                 }else{
