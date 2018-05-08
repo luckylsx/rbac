@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * 角色处理逻辑
+ * 菜单处理逻辑
  * Class RoleModel
  */
 class MenuModel extends CI_Model

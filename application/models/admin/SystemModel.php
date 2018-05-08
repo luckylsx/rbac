@@ -9,6 +9,8 @@ class SystemModel extends CI_Model {
     private $cof_table = 'common_conf';
 	public function __construct() {
 		parent::__construct();
+		$this->load->library("LogRecode");
+		$this->log = new LogRecode();
         //单例模式实例化工具辅助函数
         $this->load->helper("function_helper");
         if (!(self::$helper instanceof function_helper)){
@@ -103,14 +105,13 @@ class SystemModel extends CI_Model {
             'desc' => $params['desc'], //字段描述
         ];
         //插入数据表
-        $this->db->where('id',$params['id'])->update($this->cof_table,$data);
-        //获取插入的id
-        $affectes = $this->db->affected_rows();
-        //更新受影响的条数
-        if (!$affectes){
-            return false;
+        try{
+            $this->db->where('id',$params['id'])->update($this->cof_table,$data);
+            return true;
+        }catch(Exception $e){
+            $this->log->error("更新失败 user role :{$params['id']}",'error');
         }
-        return true;
+        return false;
     }
     /**
      * 根据id查询出配置记录

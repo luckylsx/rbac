@@ -3,27 +3,21 @@
 </head>
 <body>
 <article class="page-container">
-	<form action="<?php echo site_url('admin/SystemManage/editAction')?>" method="post" class="form form-horizontal" id="form-admin-role-edit">
-        <?php if(isset($conf['id']) && !empty($conf['id'])):?>
-        <input type="hidden" name="id" value="<?php echo $conf['id'];?>">
+	<form action="<?php echo site_url('admin/CategoryManage/editAction')?>" method="post" class="form form-horizontal" id="form-admin-role-edit">
+        <?php if(isset($cate['id']) && !empty($cate['id'])):?>
+        <input type="hidden" name="id" value="<?php echo $cate['id'];?>">
         <?php endif;?>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>字段名称：</label>
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>分类名称：</label>
             <div class="formControls col-xs-4 col-sm-6">
-                <input type="text" class="input-text" value="<?php echo $conf['column']?>" placeholder="字段名" id="roleName" name="column" readonly>
+                <input type="text" class="input-text" value="<?php echo $cate['name'] ?>" placeholder="分类名称" id="name" name="name">
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3">字段值：</label>
+            <label class="form-label col-xs-4 col-sm-3">排序：</label>
             <div class="formControls col-xs-4 col-sm-6">
-                <input type="text" class="input-text" value="<?php echo $conf['value']?>" placeholder="字段值" id="" name="value">
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3">字段描述：</label>
-            <div class="formControls col-xs-4 col-sm-6">
-                <input type="text" class="input-text" value="<?php echo $conf['desc']?>" placeholder="字段描述" id="" name="desc">
+                <input type="number" class="input-text" value="<?php echo $cate['sort'] ?>" placeholder="排序" id="sort" name="sort">
             </div>
         </div>
 		<div class="row cl">

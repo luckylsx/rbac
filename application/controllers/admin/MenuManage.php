@@ -59,9 +59,9 @@ class MenuManage extends CI_Controller {
         //插入菜单数据表
         $status = $this->menuModel->insertMenu($params);
         if (!$status){
-            self::$helper->ajaxReturn(1,'');
+            self::$helper->ajaxReturn(1,'add failed');
         }
-        self::$helper->ajaxReturn(0,'');
+        self::$helper->ajaxReturn(0,'success');
     }
 
     /**

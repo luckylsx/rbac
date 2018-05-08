@@ -17,12 +17,13 @@ class RoleModel extends CI_Model {
 	public function getRoleList($page=1,$limit=PAGINATION)
     {
         $offset = ($page-1)*$limit;
-        $this->db->limit($limit,$offset);
         $this->db->order_by("id");
         $this->db->select("*");
-        $this->db->from("admin_role");
-        $list = $this->db->get()->result_array();
-        $total = $this->db->count_all('admin_role');
+        $db = clone $this->db;
+        $this->db->limit($limit,$offset);
+        $list = $this->db->get('admin_role')->result_array();
+        $this->db = $db;
+        $total = $this->db->count_all_results('admin_role');
         return ['list'=>$list,'total'=>$total];
     }
     /**

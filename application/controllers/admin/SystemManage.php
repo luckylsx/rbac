@@ -7,12 +7,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * Class UserManage
  */
 class SystemManage extends CI_Controller {
+    //辅助函数类存储对象
     private static $helper;
     //配置文件的存放路径
-    private $common = 'common';
     public function __construct(){
         parent::__construct();
-        $this->load->model("admin/SystemModel");
+        $this->load->model(["admin/SystemModel",'ComConfModel']);
         $this->systemModel = new SystemModel();
         $this->load->library('My_Validate');
         $this->validate = new My_Validate();
@@ -21,8 +21,6 @@ class SystemManage extends CI_Controller {
         if (!(self::$helper instanceof function_helper)){
             self::$helper = new function_helper();
         }
-        $this->load->driver('cache', array('adapter' => 'redis', 'backup' =>
-            'file'));
     }
 
     /**
@@ -66,7 +64,7 @@ class SystemManage extends CI_Controller {
             self::$helper->ajaxReturn(1,"请重试");
         }
         //加入配置文件
-        $this->addConfFile(true);
+        $this->addConfFile();
         self::$helper->ajaxReturn(0,"添加成功！");
     }
     /**
@@ -113,7 +111,7 @@ class SystemManage extends CI_Controller {
             self::$helper->ajaxReturn(1,"请重试");
         }
         //加入配置文件
-        $this->addConfFile(true);
+        $this->addConfFile();
         self::$helper->ajaxReturn(0,"编辑成功！");
     }
 
@@ -134,24 +132,20 @@ class SystemManage extends CI_Controller {
             self::$helper->ajaxReturn(1,'请重试');
         }
         //加入配置文件
-        $this->addConfFile(true);
+        $this->addConfFile();
         self::$helper->ajaxReturn(0,'');
     }
 
     /**
      * 将信息添加到配置文件
      */
-    protected function addConfFile($is_redis=true)
+    protected function addConfFile()
     {
+        $this->load->driver('cache', array('adapter' => 'redis', 'backup' => 'file'));
         $list = $this->systemModel->getComConfig(['column','value']);
         //加入配置文件
         $data = array_column($list,'value','column');
-        if ($is_redis){
-            //存入redis缓存
-            $this->cache->save("common_config",json_encode($data),2*60*60);
-        }else{
-            file_put_contents(APPPATH.$this->common.'/common_conf.json',json_encode($data));
-        }
+        $comConfModel = new ComConfModel();
+        $comConfModel->add(json_encode($data));
     }
-
 }

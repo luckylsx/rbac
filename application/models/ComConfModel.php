@@ -8,10 +8,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class ComConfModel extends CI_Model
 {
     //redis key
-	private $redis_key = 'common_config';
+	private $conf_cache_key = 'common_config';
+	//缓存时间
+	private $timeLimit = 2*60*60;
 	public function __construct() {
 		parent::__construct();
-        $this->load->driver('cache', array('adapter' => 'redis', 'backup' => 'file'));
+		$this->load->library("LogRecode");
+		$this->log = new LogRecode();
+		$this->load->model("admin/SystemModel");
+        $this->systemModel = new SystemModel();
+		//使用redis缓存驱动 备用文件缓存
+        $this->load->driver('cache', array('adapter' => 'redis','backup' => 'file'));
 	}
 
     /**
@@ -21,7 +28,7 @@ class ComConfModel extends CI_Model
     public function getConf()
     {
         //获取缓存
-        $conf = $this->cache->get($this->redis_key);
+        $conf = $this->cache->get($this->conf_cache_key);
         //缓存是否存在
         if ($conf){
             return json_decode($conf,true);
@@ -31,9 +38,19 @@ class ComConfModel extends CI_Model
             $data = array_column($list,'value','column');
             $conf = json_encode(array_column($list,'value','column'));
             //存入redis缓存
-            $this->cache->save("common_config",$conf,$data['redis_time']);
+            $this->add($conf);
             return $data;
         }
+    }
+
+    /**
+     * 将数据添加到缓存
+     * @param $data string 缓存的json字符串
+     */
+    public function add($data='')
+    {
+        //存入缓存
+        $this->cache->save($this->conf_cache_key,$data,$this->timeLimit);
     }
 
 }

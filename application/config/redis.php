@@ -17,4 +17,4 @@ $config['socket_type'] = 'tcp'; //`tcp` or `unix`
 $config['host'] = '127.0.0.1';
 $config['password'] = 'redis';
 $config['port'] = 6379;
-$config['timeout'] = 0;
+$config['timeout'] = 1000;

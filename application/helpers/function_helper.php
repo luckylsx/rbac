@@ -352,4 +352,62 @@ class function_helper {
     function pass_hash($password){
         return password_hash($password,PASSWORD_BCRYPT);
     }
+
+    /**
+     * 小程序返回给前端数据
+     * @param int $errcode 1000 成功 1001失败
+     * @param string $msg
+     * @param string $data
+     */
+    function json($errcode=1000,$msg='ok',$data=''){
+        if ($errcode != 1000){
+            echo $this->json_response(['errcode'=>$errcode,'errmsg' => $msg]);
+        }else if ($errcode==1000){
+            if ($data){
+                echo $this->json_response(['errcode'=>$errcode,'errmsg' =>$msg,'data'=>$data]);
+            }else{
+                echo $this->json_response(['errcode'=>$errcode,'errmsg' =>$msg]);
+            }
+        }
+        exit;
+    }
+
+    /**
+     * 格式化日期
+     * @param $start
+     * @param $end
+     * @return array
+     */
+    function date_formate($start,$end)
+    {
+        if ($start && $end){
+            $start_date = $start.' 00:00:00';
+            $end_date = $end.' 59:59:59';
+            return [$start_date,$end_date];
+        }else{
+            $start_date = $start.' 00:00:00';
+            $end_date = $start.' 59:59:59';
+            return [$start_date,$end_date];
+        }
+    }
+    /**
+     * 返回分页数据
+     * @param $total_rows int 总记录数
+     * @param $total_pages int 总页码数
+     * @param $curreny_page int 当前页码
+     * @param $list array 详细数据记录
+     * @return array
+     */
+    function pageReturn($total_rows,$total_pages,$curreny_page,$list)
+    {
+        $data = [
+            'page'=>[
+                'total_rows' => $total_rows, //总条数
+                'total_pages' => $total_pages, //总页数
+                'current_page' => $curreny_page, //当前页码
+            ],
+            'list' => $list //详细数据
+        ];
+        return $data;
+    }
 }

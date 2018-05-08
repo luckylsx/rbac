@@ -3,27 +3,40 @@
 </head>
 <body>
 <article class="page-container">
-	<form action="<?php echo site_url('admin/SystemManage/editAction')?>" method="post" class="form form-horizontal" id="form-admin-role-edit">
-        <?php if(isset($conf['id']) && !empty($conf['id'])):?>
-        <input type="hidden" name="id" value="<?php echo $conf['id'];?>">
+	<form action="<?php echo site_url('admin/LabelManage/editAction')?>" method="post" class="form form-horizontal" id="form-admin-role-edit">
+        <?php if(isset($label['id']) && !empty($label['id'])):?>
+        <input type="hidden" name="id" value="<?php echo $label['id'];?>">
         <?php endif;?>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>字段名称：</label>
-            <div class="formControls col-xs-4 col-sm-6">
-                <input type="text" class="input-text" value="<?php echo $conf['column']?>" placeholder="字段名" id="roleName" name="column" readonly>
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>名称：</label>
+            <div class="formControls col-xs-4 col-sm-6" id="label">
+                <input type="text" class="input-text" value="<?php echo $label['name'] ?>" placeholder="分类名称" id="roleName" name="name">
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3">字段值：</label>
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>类型：</label>
             <div class="formControls col-xs-4 col-sm-6">
-                <input type="text" class="input-text" value="<?php echo $conf['value']?>" placeholder="字段值" id="" name="value">
+                <label>家居类型：<input type="radio" value="1" <?php if($label['type']==1) echo "checked";?> id="type_1" name="type"></label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <label>家居风格：<input type="radio" value="2" <?php if($label['type']==2) echo "checked";?> id="type_2" name="type"></label>
             </div>
         </div>
+        <div class="row cl" id="cover">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>封面图：</label>
+            <div class="formControls col-xs-4 col-sm-3" id="show_img">
+                <?php if($label['cover']):;?>
+                <img src="<?php echo base_url($label['cover']);?>" width="50px">
+                <?php endif;?>
+                <input type="file" placeholder="封面图" id="upload" name="cover">
+                <input type="hidden" name="cover" id="coValue" value="<?php echo $label['cover'];?>">
+            </div>
+            <br>
+            <span id="upFile" style="display:inline;background: #ccc;color: #000000;width: 50px;text-align: center;cursor:pointer">上传</span>
+        </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3">字段描述：</label>
+            <label class="form-label col-xs-4 col-sm-3">排序：</label>
             <div class="formControls col-xs-4 col-sm-6">
-                <input type="text" class="input-text" value="<?php echo $conf['desc']?>" placeholder="字段描述" id="" name="desc">
+                <input type="number" class="input-text" value="<?php echo $label['sort'];?>" placeholder="排序" id="" name="sort">
             </div>
         </div>
 		<div class="row cl">

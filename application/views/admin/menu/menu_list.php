@@ -32,7 +32,7 @@
                 <td><?php echo htmlspecialchars($menu['menu_icon']);?></td>
                 <td><?php echo $menu['menu_url'];?></td>
                 <td><?php echo $menu['p_id'];?></td>
-                <td><?php echo $menu['sort'];?></td>
+                <td><?php if ($menu['p_id']==0){echo "<b style='color: red'>".$menu['sort']."</b>";}else{$menu['sort'];};?></td>
 				<td class="f-14">
                     <a title="编辑" href="javascript:;" onclick="menu_edit('配置编辑','menuEdit?id='+<?php echo $menu['id'];?>,<?php echo $menu['id'];?>)" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
                     <a title="删除" href="javascript:;" onclick="menu_del(this,'<?php echo $menu['id'];?>')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>

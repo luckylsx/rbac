@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 数组验证类
  * Class Validator
