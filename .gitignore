@@ -22,6 +22,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 .idea/*
 application/config/config.php
 application/config/database.php
+application/config/redis.php
 
 ## Sublime Text cache files
 *.tmlanguage.cache
