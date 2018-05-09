@@ -27,7 +27,7 @@
             <?php foreach ($menu_list as $menu):?>
 			<tr class="text-c">
 				<!--<td><input type="checkbox" value="" name=""></td>-->
-				<td><?php echo $menu['title'];?></td>
+				<td><b style="color: red;"><?php echo $menu['title'];?></b></td>
                 <td><?php echo $menu['id_name'];?></td>
                 <td><?php echo htmlspecialchars($menu['menu_icon']);?></td>
                 <td><?php echo $menu['menu_url'];?></td>
